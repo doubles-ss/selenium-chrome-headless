@@ -55,7 +55,7 @@ RUN mkdir -p /usr/share/man/man1 \
 # Selenium
 #==========
 RUN  mkdir -p /opt/selenium \
-  && wget --no-verbose https://selenium-release.storage.googleapis.com/2.5/selenium-server-standalone-2.53.0.jar \
+  && wget --no-verbose https://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.1.jar \
     -O /opt/selenium/selenium-server-standalone.jar
 
 
