@@ -6,19 +6,19 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -qqy \
   && apt-get -qqy install \
-       wget ca-certificates apt-transport-https \
+       wget curl \
+       ca-certificates apt-transport-https \
        ttf-wqy-zenhei \
        fonts-thai-tlwg-ttf \
        sudo \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
-#ttf-unfonts-core \
 
 #==================
 # Google-Chrome
 #==================
 
 ARG CHROME_VERSION="google-chrome-beta"
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+RUN wget -q -O linux.pub https://dl-ssl.google.com/linux/linux_signing_key.pub && apt-key add linux.pub  && rm -f linux.pub \
   && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
   && apt-get update -qqy \
   && apt-get -qqy install \
