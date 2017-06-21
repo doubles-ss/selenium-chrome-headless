@@ -11,6 +11,8 @@ RUN apt-get update -qqy \
        ttf-wqy-zenhei \
        fonts-thai-tlwg-ttf \
        sudo \
+  && apt-get -qqy install gnupg --no-install-recommends \
+  && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 #==================
