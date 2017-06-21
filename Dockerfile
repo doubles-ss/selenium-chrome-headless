@@ -20,7 +20,7 @@ RUN apt-get update -qqy \
 ARG CHROME_VERSION="google-chrome-beta"
 # Install Key
 COPY linux_signing_key.pub /tmp/linux_signing_key.pub
-RUN apt-key add /tmp/linux_signing_key.pub  && rm -f /tmp/linux_signing_key.pub
+RUN apt-key add /tmp/linux_signing_key.pub
 RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
   && apt-get update -qqy \
   && apt-get -qqy install \
