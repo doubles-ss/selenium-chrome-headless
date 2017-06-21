@@ -19,8 +19,8 @@ RUN apt-get update -qqy \
 
 ARG CHROME_VERSION="google-chrome-beta"
 # Install Key
-RUN wget linux.pub https://dl-ssl.google.com/linux/linux_signing_key.pub && apt-key add linux_signing_key.pub  && rm -f linux_signing_key.pub \
-  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+RUN wget linux.pub https://dl-ssl.google.com/linux/linux_signing_key.pub && apt-key add linux_signing_key.pub  && rm -f linux_signing_key.pub
+RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
   && apt-get update -qqy \
   && apt-get -qqy install \
     ${CHROME_VERSION:-google-chrome-stable} \
