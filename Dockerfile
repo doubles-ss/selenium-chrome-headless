@@ -15,10 +15,9 @@ RUN apt-get update -qqy \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
-#==================
-# Google-Chrome
-#==================
-
+#===============
+# Google Chrome
+#===============
 ARG CHROME_VERSION="google-chrome-beta"
 RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
   && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
@@ -28,19 +27,17 @@ RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add
   && rm /etc/apt/sources.list.d/google-chrome.list \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
-#======================
-# add user headless
-#======================
-
+#===================
+# Add user headless
+#===================
 RUN useradd headless --shell /bin/bash --create-home \
   && usermod -a -G sudo headless \
   && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
   && echo 'headless:nopassword' | chpasswd
 
-#==============
-# open jdk 8
-#==============
-
+#===========
+# OpenJDK 8
+#===========
 RUN mkdir -p /usr/share/man/man1 \
   && echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list.d/jessie-backports.list \
   && apt-get update -qqy \
@@ -50,7 +47,6 @@ RUN mkdir -p /usr/share/man/man1 \
     wget \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
-
 #==========
 # Selenium
 #==========
@@ -58,10 +54,9 @@ RUN  mkdir -p /opt/selenium \
   && wget --no-verbose https://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar \
     -O /opt/selenium/selenium-server-standalone.jar
 
-
-#==================
-# Chrome webdriver
-#==================
+#==============
+# ChromeDriver
+#==============
 ARG CHROME_DRIVER_VERSION=2.32
 RUN wget --no-verbose -O /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip \
   && rm -rf /opt/selenium/chromedriver \
@@ -72,7 +67,7 @@ RUN wget --no-verbose -O /tmp/chromedriver_linux64.zip https://chromedriver.stor
   && ln -fs /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver
 
 #========================
-# Selenium Configuration
+# Selenium configuration
 #========================
 # As integer, maps to "maxInstances"
 ENV NODE_MAX_INSTANCES 5
@@ -94,15 +89,14 @@ RUN chmod +x /opt/selenium/generate_config
 RUN /opt/selenium/generate_config > /opt/selenium/config.json
 
 #=================================
-# Chrome Launch Script Modication
+# Chrome launch script modication
 #=================================
 COPY chrome_launcher.sh /opt/google/chrome/google-chrome
 
 RUN chown -R headless:headless /opt/selenium
 
 USER headless
-# Following line fixes
-# https://github.com/SeleniumHQ/docker-selenium/issues/87
+# Fixes https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 
 ENTRYPOINT ["java", "-jar", "/opt/selenium/selenium-server-standalone.jar"]
