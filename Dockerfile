@@ -1,4 +1,3 @@
-FROM debian:stable-slim
 
 MAINTAINER Suriya Soutmun <suriya@odd.works>
 
@@ -51,13 +50,13 @@ RUN mkdir -p /usr/share/man/man1 \
 # Selenium
 #==========
 RUN  mkdir -p /opt/selenium \
-  && wget --no-verbose https://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar \
+  && wget --no-verbose http://selenium-release.storage.googleapis.com/3.7/selenium-server-standalone-3.7.1.jar \
     -O /opt/selenium/selenium-server-standalone.jar
 
 #==============
 # ChromeDriver
 #==============
-ARG CHROME_DRIVER_VERSION=2.32
+ARG CHROME_DRIVER_VERSION=2.33
 RUN wget --no-verbose -O /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip \
   && rm -rf /opt/selenium/chromedriver \
   && unzip /tmp/chromedriver_linux64.zip -d /opt/selenium \
