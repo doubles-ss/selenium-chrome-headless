@@ -1,4 +1,4 @@
-
+FROM debian:stable-slim
 MAINTAINER Suriya Soutmun <suriya@odd.works>
 
 ARG DEBIAN_FRONTEND=noninteractive
